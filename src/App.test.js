@@ -22,9 +22,12 @@ const setup = (props={}, state=null) => shallow(<App {...props} />);
  */
 const findByTestAttr = (wrapper, val) => wrapper.find(`[data-test="${val}"]`);
 
-const appComponent = findByTestAttr(setup(), "component-app");
-const incrementButton = findByTestAttr(setup(),"increment-button");
-const counterDisplay = findByTestAttr(setup(),"counter-display");
+const wrapper = setup();
+const initialCounterState = wrapper.state('counter');
+
+const appComponent = findByTestAttr(wrapper, "component-app");
+const incrementButton = findByTestAttr(wrapper,"increment-button");
+const counterDisplay = findByTestAttr(wrapper,"counter-display");
 
 test('renders without error', () => expect(appComponent.length).toBe(1));
 
@@ -32,9 +35,7 @@ test('renders increment button', () => expect(incrementButton.length).toBe(1));
 
 test('renders counter display', () => expect(counterDisplay.length).toBe(1));
 
-test('counter starts at 0', () => {
-
-});
+test('counter starts at 0', () => expect(initialCounterState).toBe(0));
 
 test('clicking button increment counter display', () => {
 
