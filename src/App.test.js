@@ -68,3 +68,45 @@ test('clicking button increment counter display', () => {
 	const counterDisplay = findByTestAttr(wrapper,"counter-display");
 	expect(counterDisplay.text()).toContain("The counter is corrently " + (counter + 1))
 });
+
+test('clicking button decrement counter display', () => {
+	const counter = 7;
+	const wrapper = setup(null, { counter } );
+	const decrementButton = findByTestAttr(wrapper,"decrement-button");
+
+	// find button and click
+	decrementButton.simulate('click');
+	wrapper.update();
+
+	// find display and test value
+	const counterDisplay = findByTestAttr(wrapper,"counter-display");
+	expect(counterDisplay.text()).toContain("The counter is corrently " + (counter - 1))
+});
+
+test('clicking button decrement counter display when counter === 0', () => {
+	const counter = 0;
+	const wrapper = setup(null, { counter } );
+	const decrementButton = findByTestAttr(wrapper,"decrement-button");
+
+	// find button and click
+	decrementButton.simulate('click');
+	wrapper.update();
+
+	// find display and test value
+	const counterDisplay = findByTestAttr(wrapper,"counter-display");
+	expect(counterDisplay.text()).toContain("The counter is corrently 0")
+});
+
+test('check display error block when counter === 0 and user click decrement', () => {
+	const counter = 0;
+	const wrapper = setup(null, { counter } );
+	const decrementButton = findByTestAttr(wrapper,"decrement-button");
+
+	// find button and click
+	decrementButton.simulate('click');
+	wrapper.update();
+
+	// find error block
+	const errorBlock = findByTestAttr(wrapper,"error-block");
+	return expect(errorBlock.length).toBe(1)
+});
