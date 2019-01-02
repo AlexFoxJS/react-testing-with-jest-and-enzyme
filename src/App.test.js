@@ -5,10 +5,26 @@ import App from './App';
 
 Enzyme.configure({adapter: new EnzymeAdapter});
 
-const wrapper = shallow(<App/>);
-const appComponent = wrapper.find('[data-test="component-app"]');
-const incrementButton = wrapper.find('[data-test="increment-button"]');
-const counterDisplay = wrapper.find('[data-test="counter-display"]');
+/**
+ * Factory function to create a ShallowWrapper for the App component.
+ *
+ * @param {object} props
+ * @param {any} state
+ * @returns {ShallowWrapper}
+ */
+const setup = (props={}, state=null) => shallow(<App {...props} />);
+/**
+ * Return ShallowWrapper containing node(s) with the given [data-test] value
+ *
+ * @param wrapper
+ * @param val
+ * @returns {ShallowWrapper}
+ */
+const findByTestAttr = (wrapper, val) => wrapper.find(`[data-test="${val}"]`);
+
+const appComponent = findByTestAttr(setup(), "component-app");
+const incrementButton = findByTestAttr(setup(),"increment-button");
+const counterDisplay = findByTestAttr(setup(),"counter-display");
 
 test('renders without error', () => expect(appComponent.length).toBe(1));
 
