@@ -5,6 +5,13 @@ import {findByTestAttr} from '../../../test/testUtils';
 import Input from './Input';
 
 
+const setup = (initialState={}) => {
+	const wrapper = shallow(<Input />);
+	console.log(wrapper.debug());
+};
+
+setup();
+
 describe("render", () => {
 	describe("word has not been guessed", () => {
 		test("renders component without error", () => {
